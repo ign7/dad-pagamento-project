@@ -29,14 +29,14 @@ public class Pagamento  implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
+	private Long id_fatura;
 	int random = randomGenerator.nextInt(1000000000);
 	private String codigo="CPDS"+random+"HUHASSA-44"+random;
 	private float saldo;
 	private String empresa="@payment-dad";
 	private Instant dataTransacao=Instant.now();
 	private String data;
-	private String status;
+	private Status status;
 	private float precoFatura;
 	private float saldoAtualizado;
 }
