@@ -13,6 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @AllArgsConstructor
@@ -20,8 +21,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 @Entity
-
 public class Pagamento  implements Serializable {
 	Random randomGenerator = new Random();
 	

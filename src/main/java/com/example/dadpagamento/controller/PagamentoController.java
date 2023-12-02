@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,9 @@ public class PagamentoController {
 	@Autowired
 	PagamentoRepository repository;
 	
+	@Autowired
+	private KafkaTemplate<String,Pagamento> kafka;
+	
 	
 	@GetMapping("/todos")
 	public ResponseEntity<List<Pagamento>> findAll() {
@@ -44,8 +48,9 @@ public class PagamentoController {
 			payment.setId_fatura(id_fatura);
 			payment.setPrecoFatura(valor);
 			payment.setSaldo(saldo);						
-			payment.setSaldoAtualizado(saldoatualizado);
-			payment=service.insert(payment);                      
+			payment.setSaldoAtualizado(saldoatualizado);			
+			payment=service.insert(payment);  
+			this.kafka.send("payment",payment);
 			
 			return ResponseEntity.ok().body(payment);
 		}
